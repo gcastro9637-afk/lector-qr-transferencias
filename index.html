@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lector QR de Transferencias</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    #reader {
+      max-width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>📷 Lector QR de Transferencias</h1>
+  <p>Apunta la cámara al código QR</p>
+
+  <div id="reader"></div>
+
+  <div id="resultado">
+    Esperando escaneo...
+  </div>
+
+  <script>
+    function qrEncontrado(texto) {
+      document.getElementById("resultado").innerHTML =
+        "<b>✅ QR DETECTADO</b><br><br>" + texto;
+
+      html5QrcodeScanner.clear();
+    }
+
+    function qrError(error) {
+      // Ignorar errores mientras busca el QR
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      {
+        fps: 10,
+        qrbox: {
+          width: 250,
+          height: 250
+        }
+      },
+      false
+    );
+
+    html5QrcodeScanner.render(qrEncontrado, qrError);
+  </script>
+
+</body>
+</html>
